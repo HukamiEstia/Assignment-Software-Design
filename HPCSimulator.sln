@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HPCSimulator", "HPCSimulato
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestPlan", "TestPlan\TestPlan.vcxproj", "{2DFFA3EC-C019-43A7-BE6D-B3ABD49E131C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HPCsimLib", "HPCsimLib\HPCsimLib.vcxproj", "{B716499B-EEE9-4F52-8264-6A12CD3908DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{2DFFA3EC-C019-43A7-BE6D-B3ABD49E131C}.Release|x64.Build.0 = Release|x64
 		{2DFFA3EC-C019-43A7-BE6D-B3ABD49E131C}.Release|x86.ActiveCfg = Release|Win32
 		{2DFFA3EC-C019-43A7-BE6D-B3ABD49E131C}.Release|x86.Build.0 = Release|Win32
+		{B716499B-EEE9-4F52-8264-6A12CD3908DC}.Debug|x64.ActiveCfg = Debug|x64
+		{B716499B-EEE9-4F52-8264-6A12CD3908DC}.Debug|x64.Build.0 = Debug|x64
+		{B716499B-EEE9-4F52-8264-6A12CD3908DC}.Debug|x86.ActiveCfg = Debug|Win32
+		{B716499B-EEE9-4F52-8264-6A12CD3908DC}.Debug|x86.Build.0 = Debug|Win32
+		{B716499B-EEE9-4F52-8264-6A12CD3908DC}.Release|x64.ActiveCfg = Release|x64
+		{B716499B-EEE9-4F52-8264-6A12CD3908DC}.Release|x64.Build.0 = Release|x64
+		{B716499B-EEE9-4F52-8264-6A12CD3908DC}.Release|x86.ActiveCfg = Release|Win32
+		{B716499B-EEE9-4F52-8264-6A12CD3908DC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

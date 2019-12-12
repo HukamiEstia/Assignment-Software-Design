@@ -1,0 +1,2 @@
+#define HPCSIM_API __declspec(dllexport)
+#define HPCSIM_API __declspec(dllimport)

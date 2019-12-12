@@ -1,6 +1,10 @@
 #include "Job.h"
 
-Job::Job(void) {}
+Job::Job(void) {
+	computeTime = 0;
+	nCore = 0;
+	nGPU = 0;
+}
 
 Job::Job(std::string type)
 {
@@ -10,11 +14,7 @@ Job::Job(std::string type)
 	
 	int h = 3600;
 	
-	if (type == "dummy") {
-		computeTime = 1;
-		nCore = 1;
-	}
-	else if (type == "short") {
+	if (type == "short") {
 		int mean = (int)(0.5*h);
 		int stddev = (int)(0.25*h);
 		int min = 0;

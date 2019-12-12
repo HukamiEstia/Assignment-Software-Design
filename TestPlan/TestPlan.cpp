@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "..\HPCSimulator\Job.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -8,16 +9,59 @@ namespace TestPlan
 	TEST_CLASS(TestPlan)
 	{
 	public:
+		TEST_METHOD(Test_New_Job_Short)
+		{
+			int vaNIQUERtaMERE = 69;
+
+			int FILSdePUTE = 69;
+
+			Job testJob("short");
+			
+			Assert::AreEqual(vaNIQUERtaMERE, FILSdePUTE);
+
+		}
+		/*
+		TEST_METHOD(Test_New_Job_Medium)
+		{
+			//Arrange
+			//Act
+			//Assert
+		}
+		TEST_METHOD(Test_New_Job_Large)
+		{
+			//Arrange
+			//Act
+			//Assert
+		}
+		TEST_METHOD(Test_New_Job_Huge)
+		{
+			//Arrange
+			//Act
+			//Assert
+		}
+		TEST_METHOD(Test_New_Job_GPU)
+		{
+			//Arrange
+			//Act
+			//Assert
+		}
+		TEST_METHOD(Test_New_Job_BadType)
+		{
+			//Arrange
+			//Act
+			//Assert
+		}
+		/*
 		TEST_METHOD(Test_User_SendRequest)
 		{
 			//Arrange
-			
+
 			//Act
 
 			//Assert
 
+
 		}
-		/*
 		TEST_METHOD(Test_User_GenerateRequest)
 		{
 			//Arrange
@@ -55,42 +99,6 @@ namespace TestPlan
 			//Assert
 		}
 		TEST_METHOD(Test_User_GenerateJob_BadType)
-		{
-			//Arrange
-			//Act
-			//Assert
-		}
-		TEST_METHOD(Test_New_Job_Short)
-		{
-			//Arrange
-			//Act
-			//Assert
-		}
-		TEST_METHOD(Test_New_Job_Medium)
-		{
-			//Arrange
-			//Act
-			//Assert
-		}
-		TEST_METHOD(Test_New_Job_Large)
-		{
-			//Arrange
-			//Act
-			//Assert
-		}
-		TEST_METHOD(Test_New_Job_Huge)
-		{
-			//Arrange
-			//Act
-			//Assert
-		}
-		TEST_METHOD(Test_New_Job_GPU)
-		{
-			//Arrange
-			//Act
-			//Assert
-		}
-		TEST_METHOD(Test_New_Job_BadType)
 		{
 			//Arrange
 			//Act
