@@ -8,10 +8,10 @@ class Request
 public:
 	std::string type;
 	int nCore;
-	int Time;
 	int nGPU;
 	Job job;
 	Request(void);
-	Request(Job reqJob);
+	Request(std::string noRequest);
+	Request(std::string type, Job reqJob);
 };
 

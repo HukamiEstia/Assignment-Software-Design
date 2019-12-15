@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/runTests.dir/TestPlan.cpp.o  -o runTests  -L/home/hukami/Workspace/Assignment_Software_Design/HPCSimulator -Wl,-rpath,/home/hukami/Workspace/Assignment_Software_Design/HPCSimulator -Wl,-Bstatic -lgtest -Wl,-Bdynamic -lhpcsim 

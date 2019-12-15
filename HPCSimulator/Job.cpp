@@ -8,8 +8,8 @@ Job::Job(void) {
 
 Job::Job(std::string type)
 {
-	int totalCore = 128;
-	int totalGPU = 8;
+	int totalCore = 128*16;
+	int totalGPU = 8*2;
 	nGPU = 0;
 	
 	int h = 3600;
@@ -21,10 +21,13 @@ Job::Job(std::string type)
 		int max = h;
 		NumberGenerator timeGenerator = NumberGenerator(mean, stddev, min, max);
 		computeTime = timeGenerator();
-		std::random_device random_device;
-		std::mt19937 random_engine(random_device());
-		std::uniform_int_distribution<int> dist(1, 2);
-		nCore = dist(random_engine);
+
+		int coreMean = 16;
+		int coreStddev = 4;
+		int coreMin = 0;
+		int coreMax = 32;
+		NumberGenerator nCoreGenerator = NumberGenerator(coreMean, coreStddev, coreMin, coreMax);
+		nCore = nCoreGenerator();
 	}
 	else if (type == "medium"){
 		int timeMean = 4 * h;
@@ -37,7 +40,7 @@ Job::Job(std::string type)
 
 		int coreMin;
 		if (computeTime < h) {
-			coreMin = 2;
+			coreMin = 2 * 16;
 		}
 		else {
 			coreMin = 0;
@@ -105,14 +108,40 @@ Job::Job(std::string type)
 		int GPUStddev = (int)(0.125 * totalGPU);
 		int GPUMin = 1;
 		int GPUMax = (int)(0.5 * totalGPU);
+		NumberGenerator nGPUGenerator = NumberGenerator(GPUMean, GPUStddev, GPUMin, GPUMax);
+
+		int coreMean = (int)(0.05 * 16 * totalGPU);
+		int coreStddev = (int)(0.025 * 16 * totalGPU);
+		int coreMin = 0;
+		int coreMax = (int)(0.1 * 16 * totalGPU);
 		NumberGenerator nCoreGenerator = NumberGenerator(GPUMean, GPUStddev, GPUMin, GPUMax);
 
 		computeTime = timeGenerator();
+		nCore = nCoreGenerator();
 		nGPU = nCoreGenerator();
-		nCore = nGPU / 2;
 
 	}
 	else {
 		throw std::invalid_argument("unknown job type");
 	}
+}
+
+void Job::Compute(int speed) {
+	computeTime -= speed;
+}
+
+int Job::GetComputeTime(void){
+	return computeTime;
+}
+
+int Job::GetnCore(void){
+	return nCore;
+}
+
+int Job::GetnGPU(void){
+	return nGPU;
+}
+
+int Job::GetId(void){
+	return Id;
 }

@@ -3,25 +3,58 @@
 #include "Request.h"
 #include "Job.h"
 #include "Scheduler.h"
-#include <ctime>
 #include <iostream>
 #include <string>
 #include <array>
 #include <random>
+#include <optional>
 
 
 class User
 {
-private:
+protected:
+	const static std::string body;
 	int budget;
-	std::string types[5] = {"short", "medium", "large", "huge", "gpu"};
-	std::time_t lastRequest;
+	int lastRequest;
+	std::optional<Request> req;
+	const static std::string types[];
 
 public:
-	void SendRequest(Request req, Scheduler& scheduler);
-	Request GenerateRequest(void);
-	Job GenerateJob(std::string type ="");
 	User(void);
-	User(std::string body);
+	Job GenerateJob(std::string type ="");
+	void GenerateRequest(int time);
+	void SendRequest(Scheduler& scheduler);
 };
 
+class ITSupport : public User
+{
+private:
+	int budget;
+	int lastRequest;
+
+public:
+	ITSupport(void);
+	void GenerateRequest(int time);
+};
+
+class Researcher : public User
+{
+private:
+	int budget;
+	int lastRequest;
+
+public:
+	Researcher(void);
+	void GenerateRequest(int time);
+};
+
+class Student : public User
+{
+private:
+	int budget;
+	int lastRequest;
+
+public:
+	Student(void);
+	void GenerateRequest(int time);
+};

@@ -1,21 +1,23 @@
 #pragma once
 
-//#include "Job.h"
+#include "Job.h"
 #include <ctime>
 
 class Core
 {
-public:
-	
+private:
 	int speed;
 	bool GPU;
 	bool isAvailable;
-	//Job job;
-	time_t lastJobStart;
-	//void assignJob(Job job);
-	void update(void);
-	/**/
+	Job job;
 
+public:
+	
+	void Run(void);
+	void AssignJob(Job job);
+	/**/
+	bool IsAvailable(void);
+	bool isGPU(void);
 	Core(void);
 	Core(int speed, bool hasGPU = false);
 };

@@ -6,21 +6,26 @@ Core::Core(int sp, bool hasGPU) {
 	speed = sp;
 	GPU = hasGPU;
 	isAvailable = true;
-	lastJobStart = time(0);
-}
-/*
-void Core::assignJob(Job newJob) {
-	job = newJob;
-	lastJobStart = time(0);
 }
 
-void Core::update(void) {
-	if (time(0) - lastJobStart > job.computeTime / speed) {
+void Core::AssignJob(Job newJob) {
+	job = newJob;
+	isAvailable = false;
+}
+
+bool Core::IsAvailable(void) {
+	return isAvailable;
+}
+
+bool Core::isGPU(void){
+	return GPU;
+}
+void Core::Run(void) {
+	if (job.GetComputeTime() <= 0){
 		isAvailable = true;
 	}
 	else {
-		isAvailable = false;
+		std::cout << "running... \n";
+		job.Compute(speed);
 	}
 }
-
-/**/

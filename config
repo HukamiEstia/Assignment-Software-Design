@@ -1,0 +1,10 @@
+nStudent=1
+nResearcher=1
+nITSupport=1
+budgetStudent=100
+budgetResearcher=100
+budgetITSupport=100
+nNode=128
+nGPU=8
+speed=100
+simulationTime=1 

@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/hukami/Workspace/Assignment_Software_Design/HPCSimulator/Job.h
+NumberGenerator.h
+/home/hukami/Workspace/Assignment_Software_Design/HPCSimulator/NumberGenerator.h
+stdexcept
+-
+string
+-
+iostream
+-
+
+/home/hukami/Workspace/Assignment_Software_Design/HPCSimulator/NumberGenerator.h
+random
+-
+
+/home/hukami/Workspace/Assignment_Software_Design/TestPlan/TestPlan.cpp
+../HPCSimulator/Job.h
+/home/hukami/Workspace/Assignment_Software_Design/HPCSimulator/Job.h
+gtest/gtest.h
+-
+
