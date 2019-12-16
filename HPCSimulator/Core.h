@@ -16,6 +16,7 @@ public:
 	void Run(void);
 	void AssignJob(Job job);
 	/**/
+	int GetRemainingTime();
 	bool IsAvailable(void);
 	bool isGPU(void);
 	Core(void);

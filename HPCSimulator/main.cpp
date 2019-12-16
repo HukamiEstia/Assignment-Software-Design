@@ -16,6 +16,7 @@ int main()
 	Simulation simulation = Simulation(config);
 	simulation.Start();
 	while (simulation.IsRunning()){
+		//std::cout << "running \n";
 		simulation.Run();
 	}
 }

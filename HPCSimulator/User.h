@@ -13,17 +13,17 @@
 class User
 {
 protected:
-	const static std::string body;
+	std::string body;
 	int budget;
 	int lastRequest;
 	std::optional<Request> req;
-	const static std::string types[];
 
 public:
 	User(void);
+	std::string GetBody(void);
 	Job GenerateJob(std::string type ="");
-	void GenerateRequest(int time);
-	void SendRequest(Scheduler& scheduler);
+	bool HasRequest(void);
+	void SendRequest(Scheduler* scheduler);
 };
 
 class ITSupport : public User
@@ -31,10 +31,12 @@ class ITSupport : public User
 private:
 	int budget;
 	int lastRequest;
+	std::string types[5]{"short", "medium", "large", "huge", "gpu"};
 
 public:
 	ITSupport(void);
 	void GenerateRequest(int time);
+	void GenerateRequest(int time, std::string type);
 };
 
 class Researcher : public User
@@ -42,6 +44,7 @@ class Researcher : public User
 private:
 	int budget;
 	int lastRequest;
+	std::string types[5]{"short", "medium", "large", "huge", "gpu"};
 
 public:
 	Researcher(void);
@@ -53,6 +56,7 @@ class Student : public User
 private:
 	int budget;
 	int lastRequest;
+	std::string types[3]{"short", "medium", "gpu"};
 
 public:
 	Student(void);

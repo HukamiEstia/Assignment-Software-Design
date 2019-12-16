@@ -15,6 +15,7 @@ private:
 
 public:
 	Job(void);
+	Job(const Job &job);
 	Job(std::string type);
 	int GetComputeTime(void);
 	int GetnCore(void);

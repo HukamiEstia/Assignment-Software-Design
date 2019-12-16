@@ -9,16 +9,16 @@ Simulation::Simulation(Config& conf){
     int Nresearch = (*config).Get_Researcher_Number();
     int Nstudent = (*config).Get_Student_Number();
 
-    for (int i = 0; i < Nsupport; ++i) {
-		User newSupport = User("support");
+    for (int i = 0; i < Nsupport; i++) {
+		ITSupport newSupport = ITSupport();
 		supports.push_back(newSupport);
 	}
-	for (int i = 0; i < Nresearch; ++i) {
-		User newResearcher = User("researcher");
+	for (int i = 0; i < Nresearch; i++) {
+		Researcher newResearcher = Researcher();
 		researchers.push_back(newResearcher);
 
-	}for (int i = 0; i < Nstudent; ++i) {
-		User newStudent = User("student");
+	}for (int i = 0; i < Nstudent; i++) {
+		Student newStudent = Student();
 		students.push_back(newStudent);
 	}
 
@@ -47,23 +47,24 @@ bool Simulation::IsRunning(void){
 }
 
 void Simulation::Run(){
+    std::cout << "time: " << time << "\n";
     if (time < (*config).Get_Simulation_Time()){
-        for (int i = 0; i < supports.size(); ++i) {
-            std::optional<Request> request = supports[i].GenerateRequest(time);
-            if (request){
-                supports[i].SendRequest(*request, scheduler);
+        for (int i = 0; i < supports.size(); i++) {
+            supports[i].GenerateRequest(time);
+            if (supports[i].HasRequest()){
+                supports[i].SendRequest(&scheduler);
             }
 	    }
-	    for (int i = 0; i < researchers.size(); ++i) {
-            std::optional<Request> request = researchers[i].GenerateRequest(time);
-            if (request) {
-            researchers[i].SendRequest(*request, scheduler);
+	    for (int i = 0; i < researchers.size(); i++) {
+            researchers[i].GenerateRequest(time);
+            if (researchers[i].HasRequest()) {
+                researchers[i].SendRequest(&scheduler);
             }
 	    }
-        for (int i = 0; i < students.size(); ++i) {
-            std::optional<Request> request = students[i].GenerateRequest(time);
-            if (request) {
-                students[i].SendRequest(*request, scheduler);
+        for (int i = 0; i < students.size(); i++) {
+            students[i].GenerateRequest(time);
+            if (students[i].HasRequest()) {
+                students[i].SendRequest(&scheduler);
             }
     	}
         HPC.Run(scheduler);

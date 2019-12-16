@@ -29,7 +29,7 @@ public:
 	Simulator(Config config);
 	int GetNumberOfNode();
 	int GetNumberOfNodeGPU();
-	void StartJob(Job newJob, std::string type);
+	void DispatchJob(Job newJob, std::string type);
 	void Run(Scheduler& scheduler);
 	void Print();
 };

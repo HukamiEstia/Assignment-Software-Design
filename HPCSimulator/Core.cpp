@@ -12,7 +12,9 @@ void Core::AssignJob(Job newJob) {
 	job = newJob;
 	isAvailable = false;
 }
-
+int Core::GetRemainingTime(){
+	return job.GetComputeTime();
+}
 bool Core::IsAvailable(void) {
 	return isAvailable;
 }
@@ -21,11 +23,11 @@ bool Core::isGPU(void){
 	return GPU;
 }
 void Core::Run(void) {
+	job.Compute(speed);
 	if (job.GetComputeTime() <= 0){
 		isAvailable = true;
 	}
 	else {
-		std::cout << "running... \n";
-		job.Compute(speed);
+		isAvailable = false;
 	}
 }

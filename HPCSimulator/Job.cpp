@@ -6,6 +6,14 @@ Job::Job(void) {
 	nGPU = 0;
 }
 
+Job::Job(const Job &job) {
+	//std::cout << "job copy constructor \n";
+	Id = job.Id;
+	computeTime = job.computeTime;
+	nCore = job.nCore;
+	nGPU = job.nGPU;
+}
+
 Job::Job(std::string type)
 {
 	int totalCore = 128*16;
@@ -19,14 +27,14 @@ Job::Job(std::string type)
 		int stddev = (int)(0.25*h);
 		int min = 0;
 		int max = h;
-		NumberGenerator timeGenerator = NumberGenerator(mean, stddev, min, max);
+		NormalDistGenerator timeGenerator = NormalDistGenerator(mean, stddev, min, max);
 		computeTime = timeGenerator();
 
 		int coreMean = 16;
 		int coreStddev = 4;
-		int coreMin = 0;
+		int coreMin = 1;
 		int coreMax = 32;
-		NumberGenerator nCoreGenerator = NumberGenerator(coreMean, coreStddev, coreMin, coreMax);
+		NormalDistGenerator nCoreGenerator = NormalDistGenerator(coreMean, coreStddev, coreMin, coreMax);
 		nCore = nCoreGenerator();
 	}
 	else if (type == "medium"){
@@ -35,7 +43,7 @@ Job::Job(std::string type)
 		int timeMin = 0;
 		int timeMax = 8 * h;
 
-		NumberGenerator timeGenerator = NumberGenerator(timeMean, timeStddev, timeMin, timeMax);
+		NormalDistGenerator timeGenerator = NormalDistGenerator(timeMean, timeStddev, timeMin, timeMax);
 		computeTime = timeGenerator();
 
 		int coreMin;
@@ -43,21 +51,21 @@ Job::Job(std::string type)
 			coreMin = 2 * 16;
 		}
 		else {
-			coreMin = 0;
+			coreMin = 1;
 		}
 		int coreMean = (int)(0.05 * totalCore);
 		int coreStddev = (int)(0.025 * totalCore);
 		int coreMax = (int)(0.1 * totalCore);
 
-		NumberGenerator nCoreGenerator = NumberGenerator(coreMean, coreStddev, coreMin, coreMax);
+		NormalDistGenerator nCoreGenerator = NormalDistGenerator(coreMean, coreStddev, coreMin, coreMax);
 		nCore = nCoreGenerator();
 	}
-	else if ( type == "large"){
+	else if (type == "large"){
 		int timeMean = 8 * h;
 		int timeStddev = 4 * h;
 		int timeMin = 0;
 		int timeMax = 16 * h;
-		NumberGenerator timeGenerator = NumberGenerator(timeMean, timeStddev, timeMin, timeMax);
+		NormalDistGenerator timeGenerator = NormalDistGenerator(timeMean, timeStddev, timeMin, timeMax);
 		computeTime = timeGenerator();
 
 		int coreMin;
@@ -65,21 +73,21 @@ Job::Job(std::string type)
 			coreMin = (int)(0.1 * totalCore);
 		}
 		else {
-			coreMin = 0;
+			coreMin = 1;
 		}
 		int coreMean = (int)(0.25 * totalCore);
 		int coreStddev = (int)(0.125 * totalCore);
 		int coreMax = (int)(0.5 * totalCore);
-		NumberGenerator nCoreGenerator = NumberGenerator(coreMean, coreStddev, coreMin, coreMax);
+		NormalDistGenerator nCoreGenerator = NormalDistGenerator(coreMean, coreStddev, coreMin, coreMax);
 
 		nCore = nCoreGenerator();
 	}
-	else if ( type == "huge"){
+	else if (type == "huge"){
 		int timeMean = 32 * h;
 		int timeStddev = 8 * h;
 		int timeMin = 0;
 		int timeMax = 64 * h;
-		NumberGenerator timeGenerator = NumberGenerator(timeMean, timeStddev, timeMin, timeMax);
+		NormalDistGenerator timeGenerator = NormalDistGenerator(timeMean, timeStddev, timeMin, timeMax);
 
 		computeTime = timeGenerator();
 
@@ -88,12 +96,12 @@ Job::Job(std::string type)
 			coreMin = (int)(0.5 * totalCore);
 		}
 		else {
-			coreMin = 0;
+			coreMin = 1;
 		}
 		int coreMean = (int)(0.5 * totalCore);
 		int coreStddev = (int)(0.25 * totalCore);
 		int coreMax = totalCore;
-		NumberGenerator nCoreGenerator = NumberGenerator(coreMean, coreStddev, coreMin, coreMax);
+		NormalDistGenerator nCoreGenerator = NormalDistGenerator(coreMean, coreStddev, coreMin, coreMax);
 
 		nCore = nCoreGenerator();
 	}
@@ -102,19 +110,19 @@ Job::Job(std::string type)
 		int timeStddev = 2 * h;
 		int timeMin = 0;
 		int timeMax = 16 * h;
-		NumberGenerator timeGenerator = NumberGenerator(timeMean, timeStddev, timeMin, timeMax);
+		NormalDistGenerator timeGenerator = NormalDistGenerator(timeMean, timeStddev, timeMin, timeMax);
 
 		int GPUMean = (int)(0.25 * totalGPU);
 		int GPUStddev = (int)(0.125 * totalGPU);
 		int GPUMin = 1;
 		int GPUMax = (int)(0.5 * totalGPU);
-		NumberGenerator nGPUGenerator = NumberGenerator(GPUMean, GPUStddev, GPUMin, GPUMax);
+		NormalDistGenerator nGPUGenerator = NormalDistGenerator(GPUMean, GPUStddev, GPUMin, GPUMax);
 
 		int coreMean = (int)(0.05 * 16 * totalGPU);
 		int coreStddev = (int)(0.025 * 16 * totalGPU);
-		int coreMin = 0;
+		int coreMin = 1;
 		int coreMax = (int)(0.1 * 16 * totalGPU);
-		NumberGenerator nCoreGenerator = NumberGenerator(GPUMean, GPUStddev, GPUMin, GPUMax);
+		NormalDistGenerator nCoreGenerator = NormalDistGenerator(GPUMean, GPUStddev, GPUMin, GPUMax);
 
 		computeTime = timeGenerator();
 		nCore = nCoreGenerator();

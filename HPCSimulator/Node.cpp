@@ -2,18 +2,29 @@
 
 Node::Node(void) {}
 
-Node::Node(int speed, bool hasGPU){
+Node::Node(int speed, bool GPU){
+    hasGPU = GPU;
+    isAvailable = true;
+    nAvailableCores = 16;
+    nAvailableGPU = 0;
     for (int i = 0; i < 16; i++){
 		Core newCore = Core(speed, false);
 		cores.push_back(newCore);
 	}
     
-    if (hasGPU){
+    if (GPU){
+        std::vector<Core> createGPUs;
+        Node::nAvailableGPU = 2;
         for (int i = 0; i < 2; i++){
             Core newGPU = Core(speed, true);
-            (*GPUs).push_back(newGPU);
+            createGPUs.push_back(newGPU);
         }
+        GPUs = createGPUs;
     }
+}
+
+int Node::GetRemainingTime(){
+    return cores[0].GetRemainingTime();
 }
 
 bool Node::IsGPU(void){
@@ -35,7 +46,7 @@ void Node::AssignJob(Job job, int& count, int& countGPU){
     }
     if (GPUs){
         int j = 0;
-        while (j < job.GetnGPU() && j < cores.size()){
+        while (j < job.GetnGPU() && j < (*GPUs).size()){
             (*GPUs)[j].AssignJob(job);
             nAvailableCores--;
             countGPU++;
@@ -45,23 +56,42 @@ void Node::AssignJob(Job job, int& count, int& countGPU){
 }
 
 void Node::Run(void){
-    isAvailable = true;
+    nAvailableCores = 0;
+	nAvailableGPU = 0;
     for (int i = 0; i < cores.size(); i++){
         if (!(cores[i].IsAvailable())) {
-            isAvailable = false; 
             cores[i].Run();
+        }
+        else {
+            nAvailableCores++;
         }
     }
 
     if (GPUs){
         for (int i = 0; i < (*GPUs).size(); i++){
             if (!((*GPUs)[i].IsAvailable())) {
-                isAvailable = false; 
                 (*GPUs)[i].Run();
+            }
+            else {
+                nAvailableGPU++;
             }
         }
     }
-
+    if (nAvailableCores == cores.size()){
+        if (hasGPU){
+            if (nAvailableGPU == (*GPUs).size()){
+                isAvailable = true;
+            }
+            else {
+                isAvailable = false;
+            }
+        } 
+        else {
+            isAvailable = true;
+        }
+    } else {
+        isAvailable = false;
+    }
 }
 
 void Node::Print(void){

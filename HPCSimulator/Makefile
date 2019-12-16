@@ -1,5 +1,5 @@
-HPCSim: libhpcsim.so HPCSimulator.cpp
-	g++ -std=c++17 -g -L/home/hukami/Workspace/Assignment_Software_Design/HPCSimulator -Wall -o HPCSim HPCSimulator.cpp -lhpcsim 
+HPCSim: libhpcsim.so main.cpp
+	g++ -std=c++17 -g -L/home/hukami/Workspace/Assignment_Software_Design/HPCSimulator -Wall -o HPCSim main.cpp -lhpcsim 
 
 libhpcsim.so: Config.cpp NumberGenerator.cpp Core.cpp Node.cpp Job.cpp Request.cpp Scheduler.cpp User.cpp Simulator.cpp Simulation.cpp
 	g++ -std=c++17 -c -g -Wall -fPIC Config.cpp NumberGenerator.cpp Core.cpp Node.cpp Job.cpp Request.cpp User.cpp Scheduler.cpp Simulator.cpp Simulation.cpp

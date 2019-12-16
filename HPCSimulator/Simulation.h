@@ -13,9 +13,9 @@ private:
     Config* config;
     int time;
 
-	std::vector<User> supports;
-	std::vector<User> researchers;
-	std::vector<User> students;
+	std::vector<ITSupport> supports;
+	std::vector<Researcher> researchers;
+	std::vector<Student> students;
     
     Scheduler scheduler;
     Simulator HPC;

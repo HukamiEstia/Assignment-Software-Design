@@ -5,13 +5,22 @@
 
 class Request
 {
-public:
+private:
 	std::string type;
-	int nCore;
-	int nGPU;
+	int time;
+	int nNode;
+	int nNodeGPU;
 	Job job;
+
+public:
 	Request(void);
+	Request(const Request &req); 
 	Request(std::string noRequest);
-	Request(std::string type, Job reqJob);
+	Request(std::string type, Job reqJob, int time);
+	std::string GetType(void);
+	int GetTime(void);
+	int GetnNode(void);
+	int GetnNodeGPU(void);
+	Job GetJob(void);
 };
 

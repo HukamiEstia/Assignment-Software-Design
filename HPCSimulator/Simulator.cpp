@@ -4,16 +4,20 @@ Simulator::Simulator(void) {}
 
 Simulator::Simulator(Config config) {
 	nNode = config.Get_Node_Number();
+	std::cout << nNode << "\n";
 	simulationSpeed = config.Get_Speed();
 	nNodeGPU = config.Get_GPU_Number();
+	std::cout << nNodeGPU << "\n";
 	nUsed = 0;
 	
 	for (int i = 0; i < nNode; i++) {
 		Node newNode;
 		if (i < nNodeGPU) {
+			//std::cout << "node GPU" << "\n";
 			newNode = Node(simulationSpeed, true);
 		}
 		else {
+			//std::cout << "node" << "\n";
 			newNode = Node(simulationSpeed);
 		}
 		Nodes.push_back(newNode);
@@ -61,11 +65,15 @@ void Simulator::Print(void) {
 	/**/
 }
 
-void Simulator::StartJob(Job newJob, std::string type){
+void Simulator::DispatchJob(Job newJob, std::string type){
 	int count = 0;
 	int countGPU = 0;
+	std::cout << "dispatching job... \n";
+	std::cout << type << "\n";
+	std::cout << "nCores: " << newJob.GetnCore() << "\n";
 	if (type == "short"){
 		for (int i = 0; i < smallJobNodes.size(); i++) {
+
 			if ((*(smallJobNodes[i])).IsAvailable()
 			&& count < newJob.GetnCore()) {
 				(*(smallJobNodes[i])).AssignJob(newJob, count, countGPU);
@@ -74,6 +82,7 @@ void Simulator::StartJob(Job newJob, std::string type){
 	}
 	else if (type == "medium"){
 		for (int i = 0; i < mediumJobNodes.size(); i++) {
+
 			if ((*(mediumJobNodes[i])).IsAvailable()
 			&& count < newJob.GetnCore()) {
 				(*(mediumJobNodes[i])).AssignJob(newJob, count, countGPU);
@@ -82,14 +91,17 @@ void Simulator::StartJob(Job newJob, std::string type){
 	}
 	else if (type == "multi"){
 		for (int i = 0; i < multiJobNodes.size(); i++) {
+
 			if ((*(multiJobNodes[i])).IsAvailable()
 			&& count < newJob.GetnCore()) {
 				(*(multiJobNodes[i])).AssignJob(newJob, count, countGPU);
 			}
 		}
 	}
-	else if (type == "GPU"){
+	else if (type == "gpu"){
 		for (int i = 0; i < GPUJobNodes.size(); i++) {
+
+
 			if ((*(GPUJobNodes[i])).IsAvailable()
 			&& (count < newJob.GetnCore() 
 			|| countGPU <newJob.GetnGPU())){
@@ -97,13 +109,16 @@ void Simulator::StartJob(Job newJob, std::string type){
 			}
 		}
 	}
-	else throw std::invalid_argument("unknown job type");
+	else {
+		throw std::invalid_argument("unknown job type");
+	}
 }
 
 void Simulator::Run(Scheduler& scheduler) {
-	for (auto c = Nodes.begin(); c != Nodes.end(); ++c) {
-		if (!(*c).IsAvailable()) {
-			(*c).Run();
+	//std::cout << "running simulator \n";
+	for (auto node = Nodes.begin(); node != Nodes.end(); ++node) {
+		if (!(*node).IsAvailable()) {
+			(*node).Run();
 		}
 	}
 
@@ -117,10 +132,10 @@ void Simulator::Run(Scheduler& scheduler) {
 			nAvailableShort++;
 		}
 	}
-
+	std::cout << "asking for short job, " << nAvailableShort << "nodes availables \n";
 	std::optional<Job> nextShortJob = scheduler.AskJob(nAvailableShort, "short");
 	if (nextShortJob){
-		StartJob(*nextShortJob, "short");
+		DispatchJob(*nextShortJob, "short");
 	}
 
 	for (int i = 0; i < mediumJobNodes.size(); i++) {
@@ -128,9 +143,12 @@ void Simulator::Run(Scheduler& scheduler) {
 			nAvailableMedium++;
 		}
 	}
+
+	std::cout << "asking for medium job, " << nAvailableMedium << "nodes availables \n";
+
 	std::optional<Job> nextMediumJob = scheduler.AskJob(nAvailableMedium, "medium");
 	if (nextMediumJob){
-		StartJob(*nextMediumJob, "medium");
+		DispatchJob(*nextMediumJob, "medium");
 	}
 
 	for (int i = 0; i < multiJobNodes.size(); i++) {
@@ -138,18 +156,25 @@ void Simulator::Run(Scheduler& scheduler) {
 			nAvailableMulti++;
 		}
 	}
+
+	std::cout << "asking for multi job, " << nAvailableMulti << "nodes availables \n";
+
 	std::optional<Job> nextMultiJob = scheduler.AskJob(nAvailableMulti, "multi");
 	if (nextMultiJob){
-		StartJob(*nextMultiJob, "multi");
+		DispatchJob(*nextMultiJob, "multi");
 	}
 	for (int i = 0; i < GPUJobNodes.size(); i++) {
 		if ((*(GPUJobNodes[i])).IsAvailable()) {
 			nAvailableGPU++;
 		}
-		std::optional<Job> nextGPUJob = scheduler.AskJob(nAvailableGPU, "GPU");
-		if (nextGPUJob){
-			StartJob(*nextGPUJob, "GPU");
-		}
-		
 	}
+
+	std::cout << "asking for gpu job, " << nAvailableGPU << "nodes availables \n";
+
+	std::optional<Job> nextGPUJob = scheduler.AskJob(nAvailableGPU, "gpu");
+	if (nextGPUJob){
+		DispatchJob(*nextGPUJob, "gpu");
+	}
+	std::cout << "job dispatched \n";
+
 }
