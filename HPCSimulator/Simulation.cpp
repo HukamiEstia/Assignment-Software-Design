@@ -3,6 +3,11 @@
 Simulation::Simulation(void){}
 
 Simulation::Simulation(Config& conf){
+    /*
+    Initialize the parameters of the simulation
+    from the config file and create the users.
+    Then initialize the scheduler and simulator.
+    /**/
     config = &conf;
     time = 0;
     int Nsupport = (*config).Get_ITSupport_Number();
@@ -47,6 +52,10 @@ bool Simulation::IsRunning(void){
 }
 
 void Simulation::Run(){
+    /*
+    model the evolution of the system after one unit 
+    of time (defined by simulation speed)
+    /**/
     std::cout << "time: " << time << "\n";
     if (time < (*config).Get_Simulation_Time()){
         for (int i = 0; i < supports.size(); i++) {

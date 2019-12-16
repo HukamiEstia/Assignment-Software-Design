@@ -48,6 +48,11 @@ std::string User::GetBody(void){
 }
 
 void ITSupport::GenerateRequest(int time) {
+    /*
+    randomly generate request following a exponential
+    distribution with respect to time since the last 
+    request of the same user.
+    /**/
 	ExpDistGenerator timeGenerator = ExpDistGenerator(0.01);
 	int minTime = timeGenerator();
 
@@ -73,6 +78,10 @@ void ITSupport::GenerateRequest(int time) {
 }
 
 void ITSupport::GenerateRequest(int time, std::string type) {
+    /*
+    overloaded method allowing to choose the type of
+    generated job to be used for testing.
+    /**/
 	
 	ExpDistGenerator timeGenerator = ExpDistGenerator(0.01);
 	int minTime = timeGenerator();
@@ -90,6 +99,11 @@ void ITSupport::GenerateRequest(int time, std::string type) {
 }
 
 void Researcher::GenerateRequest(int time) {
+    /*
+    randomly generate request following a exponential
+    distribution with respect to time since the last 
+    request of the same user.
+    /**/
 	
 	ExpDistGenerator timeGenerator = ExpDistGenerator(0.05);
 	int minTime = timeGenerator();
@@ -117,6 +131,11 @@ void Researcher::GenerateRequest(int time) {
 }
 
 void Student::GenerateRequest(int time) {
+    /*
+    randomly generate request following a exponential
+    distribution with respect to time since the last 
+    request of the same user.
+    /**/
 	
 	ExpDistGenerator timeGenerator = ExpDistGenerator(0.03);
 	int minTime = timeGenerator();

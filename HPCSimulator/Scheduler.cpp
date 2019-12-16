@@ -152,6 +152,10 @@ void Scheduler::pop(std::string type) {
 
 
 void Scheduler::AddRequest(Request req) {
+    /*
+    receive a request, read its type and
+    puts it in the requested queue. 
+    /**/
 	std::cout << "adding request to scheduler: " << req.GetType() << "\n";
 	
 	if (req.GetType() == "short") {
@@ -177,6 +181,10 @@ void Scheduler::AddRequest(Request req) {
 }
 
 Job Scheduler::GetJob(std::string type) {
+    /*
+    return the nextJob in the queue and 
+    remove it from the scheduler.
+    /**/
 	Job nextJob;
 	nextJob = (*NextRequest(type)).GetJob();
 	pop((*NextRequest(type)).GetType());
@@ -184,6 +192,11 @@ Job Scheduler::GetJob(std::string type) {
 }
 
 std::optional<Job> Scheduler::AskJob(int nAvailableNodes, std::string type){
+    /*
+    Request the scheduler for a job with a number of available nodes
+    and the required job type.
+    If the queue is empty or the job is too big return nothing.
+    /**/
 	if (NextRequest(type)){
 		if ( type == "gpu"){
 		

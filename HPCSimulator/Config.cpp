@@ -3,6 +3,10 @@
 Config::Config(void) {}
 
 Config::Config(std::string fileName){
+    /*
+    Parse the config file and convert the 
+    read strings into int values
+    /**/
 
     std::ifstream configFile(fileName);
 

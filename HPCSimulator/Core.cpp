@@ -3,6 +3,7 @@
 Core::Core(void) {}
 
 Core::Core(int sp, bool hasGPU) {
+    //constructor
 	speed = sp;
 	GPU = hasGPU;
 	isAvailable = true;

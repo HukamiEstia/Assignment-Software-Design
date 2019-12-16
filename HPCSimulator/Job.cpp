@@ -7,7 +7,7 @@ Job::Job(void) {
 }
 
 Job::Job(const Job &job) {
-	//std::cout << "job copy constructor \n";
+	//job copy constructor
 	Id = job.Id;
 	computeTime = job.computeTime;
 	nCore = job.nCore;
@@ -16,6 +16,10 @@ Job::Job(const Job &job) {
 
 Job::Job(std::string type)
 {
+    /*
+    constructor of the Job class, initialize the
+    attributes with random values based on the job type
+    /**/
 	int totalCore = 128*16;
 	int totalGPU = 8*2;
 	nGPU = 0;
@@ -135,7 +139,12 @@ Job::Job(std::string type)
 }
 
 void Job::Compute(int speed) {
-	computeTime -= speed;
+    /*
+    model the processing of a job by the HPC
+    by decreasing the remaining time by a certain
+    amount at each unit of time
+	/**/
+    computeTime -= speed;
 }
 
 int Job::GetComputeTime(void){

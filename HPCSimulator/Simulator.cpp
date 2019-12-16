@@ -3,6 +3,11 @@
 Simulator::Simulator(void) {}
 
 Simulator::Simulator(Config config) {
+    /*
+    Initialize the simulator and its 
+    Nodes based on the configuration
+    of the simulation.
+    /**/
 	nNode = config.Get_Node_Number();
 	std::cout << nNode << "\n";
 	simulationSpeed = config.Get_Speed();
@@ -66,6 +71,9 @@ void Simulator::Print(void) {
 }
 
 void Simulator::DispatchJob(Job newJob, std::string type){
+    /*
+    Dispatch a Job into the required number of nodes.
+    /**/
 	int count = 0;
 	int countGPU = 0;
 	std::cout << "dispatching job... \n";
@@ -115,7 +123,9 @@ void Simulator::DispatchJob(Job newJob, std::string type){
 }
 
 void Simulator::Run(Scheduler& scheduler) {
-	//std::cout << "running simulator \n";
+    /*
+    Models the evolution of the simulator after one unit of time
+    /**/
 	for (auto node = Nodes.begin(); node != Nodes.end(); ++node) {
 		if (!(*node).IsAvailable()) {
 			(*node).Run();
@@ -132,7 +142,6 @@ void Simulator::Run(Scheduler& scheduler) {
 			nAvailableShort++;
 		}
 	}
-	std::cout << "asking for short job, " << nAvailableShort << "nodes availables \n";
 	std::optional<Job> nextShortJob = scheduler.AskJob(nAvailableShort, "short");
 	if (nextShortJob){
 		DispatchJob(*nextShortJob, "short");
@@ -143,8 +152,6 @@ void Simulator::Run(Scheduler& scheduler) {
 			nAvailableMedium++;
 		}
 	}
-
-	std::cout << "asking for medium job, " << nAvailableMedium << "nodes availables \n";
 
 	std::optional<Job> nextMediumJob = scheduler.AskJob(nAvailableMedium, "medium");
 	if (nextMediumJob){
@@ -157,8 +164,6 @@ void Simulator::Run(Scheduler& scheduler) {
 		}
 	}
 
-	std::cout << "asking for multi job, " << nAvailableMulti << "nodes availables \n";
-
 	std::optional<Job> nextMultiJob = scheduler.AskJob(nAvailableMulti, "multi");
 	if (nextMultiJob){
 		DispatchJob(*nextMultiJob, "multi");
@@ -169,12 +174,9 @@ void Simulator::Run(Scheduler& scheduler) {
 		}
 	}
 
-	std::cout << "asking for gpu job, " << nAvailableGPU << "nodes availables \n";
-
 	std::optional<Job> nextGPUJob = scheduler.AskJob(nAvailableGPU, "gpu");
 	if (nextGPUJob){
 		DispatchJob(*nextGPUJob, "gpu");
 	}
-	std::cout << "job dispatched \n";
 
 }
